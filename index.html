@@ -1,289 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe - Momo vs Dodo</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-image: url('https://images.unsplash.com/photo-1612832020752-0f31be0e6a20?auto=format&fit=crop&w=1950&q=80');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #fff;
-    }
-
-    .game-container {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    }
-
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    .board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(3, 100px);
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .cell {
-      background-color: rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2.5rem;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: background-color 0.3s;
-    }
-
-    .cell:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .status {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #ff4c4c;
-      color: #fff;
-      transition: background-color 0.3s;
-      margin: 5px;
-    }
-
-    button:hover {
-      background-color: #ff1a1a;
-    }
-
-    @media (max-width: 500px) {
-      .board {
-        grid-template-columns: repeat(3, 70px);
-        grid-template-rows: repeat(3, 70px);
-      }
-      .cell {
-        font-size: 2rem;
-      }
-    }
-
-    .confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      overflow: hidden;
-    }
-
-    .confetti-piece {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      opacity: 0.7;
-      animation: fall 3s linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg);}
-      100% { transform: translateY(100vh) rotate(360deg);}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe - Momo vs Dodo</title>
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url('https://images.unsplash.com/photo-1612832020752-0f31be0e6a20?auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+.game-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+h1 { margin-bottom: 20px; }
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.cell {
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+.cell:hover { background-color: rgba(255, 255, 255, 0.3); }
+.status { font-size: 1.2rem; margin-bottom: 15px; }
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #ff4c4c;
+  color: #fff;
+  transition: background-color 0.3s;
+  margin: 5px;
+}
+button:hover { background-color: #ff1a1a; }
+@media (max-width: 500px) {
+  .board { grid-template-columns: repeat(3, 70px); grid-template-rows: repeat(3, 70px); }
+  .cell { font-size: 2rem; }
+}
+.confetti {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px; height: 10px; opacity: 0.7;
+  animation: fall 3s linear infinite;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg);}
+  100% { transform: translateY(100vh) rotate(360deg);}
+}
+</style>
 </head>
 <body>
-  <div class="game-container">
-    <h1>Tic Tac Toe - Momo vs Dodo</h1>
-    <div class="status">Choose X or O for Momo</div>
-    
-    <!-- اختيار X/O -->
-    <div id="choice-buttons">
-      <button onclick="chooseSymbol('X')">X</button>
-      <button onclick="chooseSymbol('O')">O</button>
-    </div>
+<div class="game-container">
+<h1>Tic Tac Toe - Momo vs Dodo</h1>
+<div class="status">Choose X or O for Momo</div>
 
-    <!-- اختيار Dodo: AI أو Player -->
-    <div id="opponent-choice" style="display:none;">
-      <span>Choose Dodo type:</span><br>
-      <button onclick="chooseOpponent('AI')">AI</button>
-      <button onclick="chooseOpponent('Player')">Player</button>
-    </div>
+<div id="choice-buttons">
+  <button onclick="chooseSymbol('X')">X</button>
+  <button onclick="chooseSymbol('O')">O</button>
+</div>
 
-    <!-- لوحة اللعبة -->
-    <div class="board" style="display:none;">
-      <div class="cell" data-index="0"></div>
-      <div class="cell" data-index="1"></div>
-      <div class="cell" data-index="2"></div>
-      <div class="cell" data-index="3"></div>
-      <div class="cell" data-index="4"></div>
-      <div class="cell" data-index="5"></div>
-      <div class="cell" data-index="6"></div>
-      <div class="cell" data-index="7"></div>
-      <div class="cell" data-index="8"></div>
-    </div>
+<div id="opponent-choice" style="display:none;">
+  <span>Choose Dodo type:</span><br>
+  <button onclick="chooseOpponent('AI')">AI</button>
+  <button onclick="chooseOpponent('Player')">Player</button>
+</div>
 
-    <button onclick="resetGame()" style="margin-top:10px;">Restart Game</button>
-  </div>
+<div class="board" style="display:none;">
+  <div class="cell" data-index="0"></div>
+  <div class="cell" data-index="1"></div>
+  <div class="cell" data-index="2"></div>
+  <div class="cell" data-index="3"></div>
+  <div class="cell" data-index="4"></div>
+  <div class="cell" data-index="5"></div>
+  <div class="cell" data-index="6"></div>
+  <div class="cell" data-index="7"></div>
+  <div class="cell" data-index="8"></div>
+</div>
 
-  <div class="confetti" id="confetti"></div>
+<button onclick="resetGame()" style="margin-top:10px;">Restart Game</button>
+</div>
 
-  <!-- الأصوات -->
-  <audio id="moveSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
-  <audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<div class="confetti" id="confetti"></div>
 
-  <script>
-    const cells = document.querySelectorAll('.cell');
-    const statusText = document.querySelector('.status');
-    const boardDiv = document.querySelector('.board');
-    const choiceButtonsDiv = document.getElementById('choice-buttons');
-    const opponentChoiceDiv = document.getElementById('opponent-choice');
-    const confettiDiv = document.getElementById('confetti');
-    const moveSound = document.getElementById('moveSound');
-    const winSound = document.getElementById('winSound');
+<audio id="moveSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+<audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 
-    let momoSymbol = '';
-    let dodoSymbol = '';
-    let currentPlayer = '';
-    let gameBoard = ['', '', '', '', '', '', '', '', ''];
-    let gameActive = false;
-    let soundEnabled = false;
-    let dodoType = 'AI'; // افتراضي AI
+<script>
+const cells = document.querySelectorAll('.cell');
+const statusText = document.querySelector('.status');
+const boardDiv = document.querySelector('.board');
+const choiceButtonsDiv = document.getElementById('choice-buttons');
+const opponentChoiceDiv = document.getElementById('opponent-choice');
+const confettiDiv = document.getElementById('confetti');
+const moveSound = document.getElementById('moveSound');
+const winSound = document.getElementById('winSound');
 
-    const winningConditions = [
-      [0,1,2],[3,4,5],[6,7,8],
-      [0,3,6],[1,4,7],[2,5,8],
-      [0,4,8],[2,4,6]
-    ];
+let momoSymbol='', dodoSymbol='', currentPlayer='', gameBoard=['','','','','','','','',''], gameActive=false, soundEnabled=false, dodoType='AI';
+const winningConditions = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
-    function enableSound() { soundEnabled = true; moveSound.play().catch(()=>{}); }
-    function playMoveSound() { if(soundEnabled) moveSound.play(); }
-    function playWinSound() { if(soundEnabled) winSound.play(); }
+function enableSound(){ soundEnabled=true; moveSound.play().catch(()=>{}); }
+function playMoveSound(){ if(soundEnabled) moveSound.play(); }
+function playWinSound(){ if(soundEnabled) winSound.play(); }
 
-    function chooseSymbol(symbol) {
-      momoSymbol = symbol;
-      dodoSymbol = symbol === 'X' ? 'O' : 'X';
-      choiceButtonsDiv.style.display = 'none';
-      opponentChoiceDiv.style.display = 'block';
-      enableSound();
-    }
+function chooseSymbol(symbol){
+  momoSymbol=symbol;
+  dodoSymbol=symbol==='X'?'O':'X';
+  choiceButtonsDiv.style.display='none';
+  opponentChoiceDiv.style.display='block';
+  enableSound();
+}
 
-    function chooseOpponent(type) {
-      dodoType = type;
-      currentPlayer = 'Momo';
-      gameActive = true;
-      opponentChoiceDiv.style.display = 'none';
-      boardDiv.style.display = 'grid';
-      statusText.textContent = `Turn: ${currentPlayer} (${momoSymbol})`;
-    }
+function chooseOpponent(type){
+  dodoType=type;
+  currentPlayer='Momo';
+  gameActive=true;
+  opponentChoiceDiv.style.display='none';
+  boardDiv.style.display='grid';
+  statusText.textContent=`Turn: ${currentPlayer} (${momoSymbol})`;
+}
 
-    function handleCellClick(e) {
-      if (!gameActive) return;
-      const index = e.target.getAttribute('data-index');
-      if (gameBoard[index] !== '') return;
+function handleCellClick(e){
+  if(!gameActive) return;
+  const index=e.target.getAttribute('data-index');
+  if(gameBoard[index]!=='') return;
 
-      if (currentPlayer === 'Momo') {
-        gameBoard[index] = momoSymbol;
-        e.target.textContent = momoSymbol;
-        playMoveSound();
-        if (checkWinner()) { endGame('Momo'); return; }
-        if (!gameBoard.includes('')) { endGame('Draw'); return; }
-        currentPlayer = 'Dodo';
-      } else if (currentPlayer === 'Dodo' && dodoType === 'Player') {
-        gameBoard[index] = dodoSymbol;
-        e.target.textContent = dodoSymbol;
-        playMoveSound();
-        if (checkWinner()) { endGame('Dodo'); return; }
-        if (!gameBoard.includes('')) { endGame('Draw'); return; }
-        currentPlayer = 'Momo';
-      }
+  if(currentPlayer==='Momo'){
+    gameBoard[index]=momoSymbol;
+    e.target.textContent=momoSymbol;
+    playMoveSound();
+    if(checkWinner()){ endGame('Momo'); return; }
+    if(!gameBoard.includes('')){ endGame('Draw'); return; }
+    currentPlayer='Dodo';
+  } else if(currentPlayer==='Dodo' && dodoType==='Player'){
+    gameBoard[index]=dodoSymbol;
+    e.target.textContent=dodoSymbol;
+    playMoveSound();
+    if(checkWinner()){ endGame('Dodo'); return; }
+    if(!gameBoard.includes('')){ endGame('Draw'); return; }
+    currentPlayer='Momo';
+  }
 
-      statusText.textContent = `Turn: ${currentPlayer} (${currentPlayer==='Momo'?momoSymbol:dodoSymbol})`;
+  statusText.textContent=`Turn: ${currentPlayer} (${currentPlayer==='Momo'?momoSymbol:dodoSymbol})`;
 
-      if (currentPlayer === 'Dodo' && dodoType === 'AI') {
-        setTimeout(aiMove, 500);
-      }
-    }
+  if(currentPlayer==='Dodo' && dodoType==='AI'){ setTimeout(aiMove,500); }
+}
 
-    function aiMove() {
-      if (!gameActive) return;
+function aiMove(){
+  if(!gameActive) return;
+  let move=findBestMove(dodoSymbol);
+  if(move===-1) move=findBestMove(momoSymbol);
+  if(move===-1){
+    const emptyIndices=gameBoard.map((v,i)=>v===''?i:-1).filter(i=>i!==-1);
+    move=emptyIndices[Math.floor(Math.random()*emptyIndices.length)];
+  }
+  gameBoard[move]=dodoSymbol;
+  cells[move].textContent=dodoSymbol;
+  playMoveSound();
+  if(checkWinner()){ endGame('Dodo'); return; }
+  if(!gameBoard.includes('')){ endGame('Draw'); return; }
+  currentPlayer='Momo';
+  statusText.textContent=`Turn: ${currentPlayer} (${momoSymbol})`;
+}
 
-      let move = findBestMove(dodoSymbol);
-      if (move === -1) move = findBestMove(momoSymbol);
-      if (move === -1) {
-        const emptyIndices = gameBoard.map((v,i)=>v===''?i:-1).filter(i=>i!==-1);
-        move = emptyIndices[Math.floor(Math.random()*emptyIndices.length)];
-      }
+function findBestMove(symbol){
+  for(let condition of winningConditions){
+    const [a,b,c]=condition;
+    const values=[gameBoard[a],gameBoard[b],gameBoard[c]];
+    if(values.filter(v=>v===symbol).length===2 && values.includes('')) return [a,b,c].find(i=>gameBoard[i]==='');
+  }
+  return -1;
+}
 
-      gameBoard[move] = dodoSymbol;
-      cells[move].textContent = dodoSymbol;
-      playMoveSound();
+function endGame(winner){
+  gameActive=false;
+  if(winner==='Draw') statusText.textContent='Draw! 🤝';
+  else { statusText.textContent=`${winner} wins! 🎉`; showConfetti(); playWinSound(); }
+}
 
-      if (checkWinner()) { endGame('Dodo'); return; }
-      if (!gameBoard.includes('')) { endGame('Draw'); return; }
+function checkWinner(){
+  return winningConditions.some(([a,b,c])=>gameBoard[a]&&gameBoard[a]===gameBoard[b]&&gameBoard[a]===gameBoard[c]);
+}
 
-      currentPlayer = 'Momo';
-      statusText.textContent = `Turn: ${currentPlayer} (${momoSymbol})`;
-    }
+function resetGame(){
+  gameBoard=['','','','','','','','',''];
+  cells.forEach(cell=>cell.textContent='');
+  momoSymbol=''; dodoSymbol=''; currentPlayer=''; gameActive=false;
+  choiceButtonsDiv.style.display='block';
+  opponentChoiceDiv.style.display='none';
+  boardDiv.style.display='none';
+  confettiDiv.innerHTML='';
+  statusText.textContent='Choose X or O for Momo';
+}
 
-    function findBestMove(symbol) {
-      for (let condition of winningConditions) {
-        const [a,b,c] = condition;
-        const values = [gameBoard[a], gameBoard[b], gameBoard[c]];
-        if (values.filter(v=>v===symbol).length===2 && values.includes('')) {
-          return [a,b,c].find(i=>gameBoard[i]==='');
-        }
-      }
-      return -1;
-    }
-
-    function endGame(winner) {
-      gameActive = false;
-      if (winner === 'Draw') statusText.textContent = 'Draw! 🤝';
-      else {
-        statusText.textContent = `${winner} wins! 🎉`;
-        showConfetti();
-        playWinSound();
-      }
-    }
-
-    function checkWinner() {
-      return winningConditions.some(([a,b,c])=>{
-        return gameBoard[a] && gameBoard[a]===gameBoard[b] && gameBoard[a]===gameBoard[c];
-      });
-    }
-
-    function resetGame() {
-      gameBoard = ['', '', '', '', '', '', '', '', ''];
-      cells.forEach(cell=>cell.textContent='');
-      momoSymbol = '';
-      dodoSymbol = '';
-      currentPlayer = '';
-      gameActive = false;
-      choiceButtonsDiv.style.display = 'block';
-      opponentChoiceDiv.style.display = 'none';
-      boardDiv.style.display = 'none';
-      confettiDiv.innerHTML = '';
-      statusText.textContent = 'Choose X or O for Momo';
-    }
-
-    cells.forEach(cell=>cell.addEventListener('click', handleCellClick));
+cells.forEach(cell=>cell.addEventListener('click',handleCellClick));
+</script>
+</body>
+</html>
